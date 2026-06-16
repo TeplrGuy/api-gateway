@@ -1,8 +1,8 @@
 {
-  "name": "agentic-api-gateway",
+  "name": "api-gateway",
   "version": "0.1.0",
   "private": true,
-  "description": "Agentic SDLC demo service: api-gateway",
+  "description": "SDLC demo service: api-gateway",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js"
@@ -11,3 +11,4 @@
     "express": "^4.19.2"
   }
 }
+

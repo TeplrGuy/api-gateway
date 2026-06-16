@@ -15,4 +15,5 @@ jobs:
         with:
           node-version: '20'
       - run: npm install --no-audit --no-fund
-      - run: npm run start -- --help || true
+      - run: node --check src/index.js
+

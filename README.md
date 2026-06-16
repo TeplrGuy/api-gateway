@@ -1,3 +1,4 @@
-# agentic-api-gateway
+# api-gateway
 
-Node.js service baseline for the Agentic SDLC demo.
+Node.js service baseline for the SDLC demo.
+
