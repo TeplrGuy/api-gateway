@@ -4,6 +4,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 permissions:
+  copilot-requests: write
   contents: read
   issues: read
   pull-requests: read
