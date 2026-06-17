@@ -9,7 +9,6 @@ permissions:
   pull-requests: read
   actions: read
 tracker-id: gateway-pr-review
-max-ai-credits: 4
 safe-outputs:
   add-comment:
     max: 1

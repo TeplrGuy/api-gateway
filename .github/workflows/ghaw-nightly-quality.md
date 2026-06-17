@@ -10,7 +10,6 @@ permissions:
   issues: read
   pull-requests: read
 tracker-id: gateway-nightly-quality
-max-ai-credits: 3
 safe-outputs:
   create-issue:
     title-prefix: "[nightly-quality] "
