@@ -12,7 +12,7 @@ max-ai-credits: 3
 safe-outputs:
   add-comment:
     max: 1
-  add-label:
+  add-labels:
     max: 5
   create-issue:
     title-prefix: "[triage-split] "

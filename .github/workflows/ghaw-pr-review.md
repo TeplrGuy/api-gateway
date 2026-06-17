@@ -13,7 +13,7 @@ max-ai-credits: 4
 safe-outputs:
   add-comment:
     max: 1
-  add-label:
+  add-labels:
     max: 3
 ---
 
