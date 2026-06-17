@@ -27,11 +27,14 @@ Describe expected behavior and boundaries.
 
 ## Acceptance criteria
 - [ ] Clear testable behavior
+- [ ] Unit or service-level automated tests identified and required
+- [ ] End-to-end validation path identified and required
 - [ ] Quality gates identified (CI/security/e2e/load if needed)
 - [ ] Rollout + rollback plan
 
 ## Evidence needed at PR time
 - [ ] Linked issue(s)
+- [ ] Unit test evidence
+- [ ] End-to-end validation evidence
 - [ ] Validation links
 - [ ] Risk assessment
-

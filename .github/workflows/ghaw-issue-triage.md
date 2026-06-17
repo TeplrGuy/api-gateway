@@ -44,9 +44,10 @@ When a new issue arrives:
 
 4. **Identify required quality gates**:
    - CI (always required)
+   - Unit or service-level automated tests (always required)
    - Security scan (always required — gateway is the auth perimeter)
    - Auth/authz regression tests (required for any auth-adjacent change)
-   - Integration tests (required if upstream routing changes)
+   - End-to-end validation through the affected route path (required for implementation changes)
    - Human PR review (always required)
    - Load test (required if rate limiting or throughput policies change)
 
@@ -63,9 +64,10 @@ When a new issue arrives:
 
 **Required quality gates:**
 - [ ] CI
+- [ ] Unit/service-level automated tests
 - [ ] Security
 - [ ] Auth/authz regression tests  (include for any auth change)
-- [ ] Integration tests  (include if upstream routing changes)
+- [ ] End-to-end validation through the affected route path
 - [ ] Human PR review
 - [ ] Load test  (include if rate limiting or throughput affected)
 
@@ -77,6 +79,8 @@ When a new issue arrives:
 **Evidence expected at PR time:**
 - Route test results / curl output
 - Auth flow verification
+- Unit test report
+- End-to-end validation report
 - Load test results if applicable
 ```
 

@@ -29,11 +29,12 @@ What is broken and why this matters.
 - Screenshots / API payloads:
 
 ## Acceptance criteria
-- [ ] Repro is covered by an automated or manual test
+- [ ] Repro is covered by an automated test where practical
+- [ ] Unit or service-level automated tests are added or updated
+- [ ] End-to-end validation covers the affected user or service path
 - [ ] Fix is validated in dev
 - [ ] Rollback path is documented
 
 ## Delegation suitability
 - [ ] Can be split into parallel slices
 - [ ] Must stay with one owner only
-

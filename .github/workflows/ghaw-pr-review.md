@@ -59,9 +59,10 @@ Analyze the pull request and:
 
 **Required before merge:**
 - [ ] CI green
+- [ ] Unit/service-level tests pass
 - [ ] Security scan green
 - [ ] Auth regression tests pass  (include if auth changed)
-- [ ] Route regression tests pass
+- [ ] End-to-end route validation passes
 - [ ] Human code review approval
 - [ ] Load test approved  (include if rate limits changed)
 

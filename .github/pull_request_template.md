@@ -17,7 +17,8 @@
 ## Validation Evidence
 - [ ] CI passed (link):
 - [ ] Security passed (link):
-- [ ] Functional/e2e validation (link):
+- [ ] Unit or service-level tests passed (link):
+- [ ] End-to-end validation passed (Playwright, curl-through-flow, or equivalent) (link):
 - [ ] Load/perf validation if required (link or N/A):
 
 ## Risk and Rollback

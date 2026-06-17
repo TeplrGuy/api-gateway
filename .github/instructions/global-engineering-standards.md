@@ -23,6 +23,12 @@ These standards apply across the SDLC demo repositories unless a task explicitly
 - Add or update tests when behavior changes.
 - Keep tests close to the user-visible or contract-visible behavior they verify.
 - Prefer fast deterministic tests first, then broader workflow tests when needed.
+- Treat **unit or service-level automated tests** as mandatory for implementation work.
+- Treat **end-to-end validation** as mandatory for implementation work:
+  - UI changes: Playwright or equivalent browser flow coverage.
+  - API/backend changes: end-to-end validation through the affected upstream path (gateway, consumer, or curl-driven integration path).
+  - Contract changes: downstream validation proving the changed contract is consumable.
+- No issue is complete until both the narrow automated tests and the end-to-end validation evidence are linked in the PR or issue.
 
 ## API and contract discipline
 - Preserve backward compatibility unless the issue explicitly allows a breaking change.
