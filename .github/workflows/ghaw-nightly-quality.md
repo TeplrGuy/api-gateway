@@ -5,6 +5,7 @@ on:
     - cron: "daily around 08:00 on weekdays"
   workflow_dispatch:
 permissions:
+  copilot-requests: write
   contents: read
   actions: read
   issues: read
