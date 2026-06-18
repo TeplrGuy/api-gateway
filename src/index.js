@@ -49,6 +49,30 @@ app.post('/api/orders', async (req, res) => {
   }
 });
 
+app.get('/api/orders', async (req, res) => {
+  const correlationId = req.header('x-correlation-id') || randomUUID();
+  const allowedParams = ['page', 'limit', 'status', 'search', 'orderId'];
+  const query = new URLSearchParams();
+  for (const key of allowedParams) {
+    if (req.query[key] !== undefined) query.set(key, req.query[key]);
+  }
+  const qs = query.toString();
+  const upstreamUrl = `${ordersBaseUrl}/orders${qs ? '?' + qs : ''}`;
+  try {
+    const response = await fetchWithTimeout(upstreamUrl, {
+      headers: { 'x-correlation-id': correlationId }
+    });
+    const payload = await response.json().catch(() => ({}));
+    res.setHeader('x-correlation-id', correlationId);
+    return res.status(response.status).json(payload);
+  } catch (error) {
+    if (error && error.name === 'AbortError') {
+      return res.status(504).json({ error: 'orders_timeout', correlationId });
+    }
+    return res.status(502).json({ error: 'orders_unavailable', correlationId });
+  }
+});
+
 app.get('/api/orders/:orderId', async (req, res) => {
   const correlationId = req.header('x-correlation-id') || randomUUID();
   try {
