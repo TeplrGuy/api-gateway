@@ -3,12 +3,14 @@ description: Triage incoming issues — classify, label, assess scope, recommend
 on:
   issues:
     types: [opened, edited, reopened]
+roles: [admin, maintainer, write]
 permissions:
   copilot-requests: write
   contents: read
   issues: read
   pull-requests: read
 tracker-id: gateway-issue-triage
+max-ai-credits: 3
 safe-outputs:
   add-comment:
     max: 1

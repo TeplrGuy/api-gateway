@@ -38,3 +38,8 @@ This repository is the upstream entrypoint between the portal and downstream ser
 - Do not embed portal UI assumptions in the gateway.
 - Do not duplicate long-term business rules from downstream services.
 - Escalate if a change would alter the upstream/downstream contract model across repos.
+
+## APM-aligned operations
+- Apply `.github/instructions/apm-aligned-agent-ops.md` for deterministic context loading and cost governance.
+- Keep issue/PR outputs concise and evidence-first.
+- Respect workflow safe-output limits and `max-ai-credits` guardrails.

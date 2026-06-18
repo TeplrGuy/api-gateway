@@ -3,6 +3,7 @@ description: Review pull requests — scope analysis, risk assessment, validatio
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
+roles: [admin, maintainer, write]
 permissions:
   copilot-requests: write
   contents: read
@@ -10,6 +11,7 @@ permissions:
   pull-requests: read
   actions: read
 tracker-id: gateway-pr-review
+max-ai-credits: 4
 safe-outputs:
   add-comment:
     max: 1
