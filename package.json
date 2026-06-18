@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/index.js",
     "test:unit": "node --check src/index.js",
-    "test:integration": "node --test tests/integration/**/*.test.js",
+    "test:integration": "node --test \"tests/integration/*.test.js\"",
     "test": "npm run test:unit && npm run test:integration"
   },
   "dependencies": {
