@@ -43,3 +43,6 @@ This repository is the upstream entrypoint between the portal and downstream ser
 - Apply `.github/instructions/apm-aligned-agent-ops.md` for deterministic context loading and cost governance.
 - Keep issue/PR outputs concise and evidence-first.
 - Respect workflow safe-output limits and `max-ai-credits` guardrails.
+
+## Deterministic testing
+- Read `.github/instructions/tests.instructions.md` and follow its evidence requirements for unit/integration/E2E or infra validation.

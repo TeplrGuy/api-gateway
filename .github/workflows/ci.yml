@@ -20,4 +20,5 @@ jobs:
         with:
           node-version: '20'
       - run: npm ci --no-audit --no-fund
-      - run: node --check src/index.js
+      - run: npm run test:unit
+      - run: npm run test:integration
