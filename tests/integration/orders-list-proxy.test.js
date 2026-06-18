@@ -44,7 +44,7 @@ test("GET /api/orders returns 502 orders_unavailable when orders-service is unre
   }
 });
 
-test("GET /api/orders forwards whitelisted query params and correlation ID", async () => {
+test("GET /api/orders forwards allowlisted query params and correlation ID", async () => {
   const port = String(4000 + Math.floor(Math.random() * 200));
   const baseUrl = `http://127.0.0.1:${port}`;
   const mockPort = String(4200 + Math.floor(Math.random() * 200));
@@ -98,9 +98,9 @@ test("GET /api/orders forwards whitelisted query params and correlation ID", asy
     assert.equal(parsedUrl.searchParams.get("status"), "new");
     assert.equal(parsedUrl.searchParams.get("search"), "alice");
     assert.equal(parsedUrl.searchParams.get("orderId"), "o-9");
-    assert.equal(parsedUrl.searchParams.get("extra"), null, "non-whitelisted params must not be forwarded");
+    assert.equal(parsedUrl.searchParams.get("extra"), null, "non-allowlisted params must not be forwarded");
 
-    assert.equal(capturedCorrelationId, correlationId, "correlation ID must be forwarded to upstream");
+    assert.equal(capturedCorrelationId, correlationId, "correlation ID must be forwarded to downstream");
   } finally {
     child.kill("SIGTERM");
     await new Promise((resolve) => mock.close(resolve));
