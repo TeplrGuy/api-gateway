@@ -21,4 +21,6 @@ jobs:
         run: test -f .github/skills/skills-manifest.json
 
       - name: Verify contracts exist
-        run: test -d .github/skills/contracts
+        run: |
+          test -f .github/skills/issue-triage/v1/SKILL.md
+          test -f .github/skills/pr-review/v1/SKILL.md

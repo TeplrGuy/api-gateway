@@ -32,8 +32,8 @@ jobs:
       - name: Sync selected skills
         run: |
           rm -rf .github/skills/contracts
-          mkdir -p .github/skills/contracts
-          cp -R _skills/skills .github/skills/contracts/
+          mkdir -p .github/skills
+          cp -R _skills/skills/* .github/skills/
           cp _skills/schemas/skill-output.schema.json .github/skills/skill-output.schema.json
           cp _skills/skills-manifest.json .github/skills/skills-manifest.json
 
