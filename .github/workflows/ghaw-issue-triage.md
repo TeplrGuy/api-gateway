@@ -3,7 +3,7 @@ description: Triage incoming issues — classify, label, assess scope, recommend
 on:
   issues:
     types: [opened, edited, reopened]
-roles: [admin, maintainer, write]
+  roles: [admin, maintainer, write]
 permissions:
   copilot-requests: write
   contents: read
