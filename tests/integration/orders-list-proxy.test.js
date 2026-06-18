@@ -3,23 +3,39 @@ const assert = require("node:assert/strict");
 const http = require("node:http");
 const { spawn } = require("node:child_process");
 
-function wait(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function waitForHealth(baseUrl, attempts = 40) {
-  for (let i = 0; i < attempts; i += 1) {
-    try {
-      const response = await fetch(`${baseUrl}/health`);
-      if (response.ok) return;
-    } catch {}
-    await wait(150);
-  }
-  throw new Error("api-gateway did not become healthy in time");
-}
-
 function randomPort(base) {
   return String(base + Math.floor(Math.random() * 200));
+}
+
+function waitForGatewayReady(child, port) {
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      reject(new Error("api-gateway did not become healthy in time"));
+    }, 5000);
+
+    function cleanup() {
+      clearTimeout(timeout);
+      child.stdout.off("data", onData);
+      child.stderr.off("data", onData);
+      child.off("exit", onExit);
+    }
+
+    function onData(chunk) {
+      if (String(chunk).includes(`api-gateway listening on port ${port}`)) {
+        cleanup();
+        resolve();
+      }
+    }
+
+    function onExit(code) {
+      cleanup();
+      reject(new Error(`api-gateway exited before startup (code: ${code})`));
+    }
+
+    child.stdout.on("data", onData);
+    child.stderr.on("data", onData);
+    child.on("exit", onExit);
+  });
 }
 
 test("GET /api/orders proxies list requests and forwards whitelisted query params", async () => {
@@ -46,11 +62,11 @@ test("GET /api/orders proxies list requests and forwards whitelisted query param
       ORDERS_SERVICE_URL: `http://127.0.0.1:${downstreamPort}`,
       SERVICE_TIMEOUT_MS: "2000"
     },
-    stdio: "ignore"
+    stdio: ["ignore", "pipe", "pipe"]
   });
 
   try {
-    await waitForHealth(gatewayBaseUrl);
+    await waitForGatewayReady(gateway, gatewayPort);
 
     const response = await fetch(
       `${gatewayBaseUrl}/api/orders?page=2&limit=25&status=shipped&search=alice&orderId=ord-7&ignored=value`,
@@ -91,11 +107,11 @@ test("GET /api/orders returns structured 502 when orders service is unavailable"
       ORDERS_SERVICE_URL: "http://127.0.0.1:59999",
       SERVICE_TIMEOUT_MS: "200"
     },
-    stdio: "ignore"
+    stdio: ["ignore", "pipe", "pipe"]
   });
 
   try {
-    await waitForHealth(gatewayBaseUrl);
+    await waitForGatewayReady(gateway, gatewayPort);
 
     const response = await fetch(`${gatewayBaseUrl}/api/orders?page=1`);
     assert.equal(response.status, 502);
