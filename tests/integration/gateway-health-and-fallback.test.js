@@ -22,7 +22,7 @@ test("api-gateway health endpoint and downstream fallback", async () => {
   const baseUrl = `http://127.0.0.1:${port}`;
   const child = spawn("node", ["src/index.js"], {
     cwd: process.cwd(),
-    env: { ...process.env, PORT: port, SERVICE_TIMEOUT_MS: "200" },
+    env: { ...process.env, PORT: port, SERVICE_TIMEOUT_MS: "200", ORDERS_SERVICE_URL: "http://127.0.0.1:0" },
     stdio: "ignore"
   });
 
