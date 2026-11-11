@@ -2,7 +2,7 @@
 
 ## Core rule
 All implementation PRs must include deterministic test evidence from three layers when applicable:
-1. Unit/syntax checks (`npm run test:unit`)
+1. Syntax checks (`npm run test:syntax`) and behavioral unit tests where available
 2. Integration checks (`npm run test:integration`)
 3. End-to-end checks for user-facing flows (`npm run test:e2e` where available)
 

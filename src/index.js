@@ -1,3 +1,4 @@
+require('./telemetry');
 const express = require('express');
 const { randomUUID } = require('crypto');
 
