@@ -29,3 +29,20 @@ Roll out in that order. Rollback removes the new list route with its callers
 while retaining create/tracking. Contract/UI status alignment still needs
 human confirmation; do not close the epic from these backend changes alone.
 
+## Agentic review runtime
+
+The PR review lock is generated with gh-aw v1.2.2, matching the compile workflow's
+CLI version. Do not edit the generated lock. With that compiler installed, run:
+
+```sh
+gh aw compile ghaw-pr-review --no-check-update --action-mode action --action-tag 53d0749e19424a918acd82b4d140264ce48f2f14
+```
+
+The immutable action revision is the preserved v1.2.2 setup revision. This upgrade
+replaces the v0.79.8 runtime that failed to locate `copilot_harness.cjs`. Verify an
+actual PR-triggered run before declaring the runtime repaired. The previously
+approved 250-credit limit removes the old four-credit cap, not runtime or access
+failures. Safe outputs remain one comment and up to three labels; this workflow
+cannot approve, merge or deploy. Its advisory review does not replace human
+coverage verification.
+
