@@ -45,4 +45,7 @@ approved 250-credit limit removes the old four-credit cap, not runtime or access
 failures. Safe outputs remain one comment and up to three labels; this workflow
 cannot approve, merge or deploy. Its advisory review does not replace human
 coverage verification.
+Reviewers must inspect the full patch (API or exact base/head Git diff), cite
+source/test lines and report blocked evidence explicitly. A PR body, diff stat
+or pending review check cannot substitute for code inspection or failed CI.
 

@@ -20,13 +20,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: TeplrGuy/orders-service
-          ref: dfe1f050267a968233bbb88635eb1b7f6e0a1189
+          ref: 0fa60ebe3b7e0c4626da5094760e1d77128676b4
           path: orders-service
           persist-credentials: false
       - uses: actions/checkout@v4
         with:
           repository: TeplrGuy/shared-contracts
-          ref: 52a6f8952c39e0bdbef1cb4d8e9fd96a2c6e5fed
+          ref: cb6fd9b0c92a4eef9c001f7ccf0ac61872ad0fdc
           path: shared-contracts
           persist-credentials: false
       - uses: actions/setup-node@v4
