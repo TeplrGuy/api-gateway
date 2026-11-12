@@ -1,0 +1,61 @@
+name: Order list compatibility
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  order-list-compatibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: gateway
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: TeplrGuy/orders-service
+          ref: 8b37b7809b1027b87330dc3cadb4734c119c0454
+          path: orders-service
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: TeplrGuy/shared-contracts
+          ref: 52a6f8952c39e0bdbef1cb4d8e9fd96a2c6e5fed
+          path: shared-contracts
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: |
+            gateway/package-lock.json
+            orders-service/package-lock.json
+            shared-contracts/package-lock.json
+      - name: Restore exact dependency locks
+        run: |
+          npm ci --prefix gateway --ignore-scripts --no-audit --no-fund
+          npm ci --prefix orders-service --ignore-scripts --no-audit --no-fund
+          npm ci --prefix shared-contracts --ignore-scripts --no-audit --no-fund
+      - name: Validate provider, proxy and schema behavior
+        run: |
+          npm run validate --prefix shared-contracts
+          npm run test:unit --prefix shared-contracts
+          npm test --prefix orders-service
+          npm test --prefix gateway
+      - name: Exercise real cross-repository HTTP path
+        working-directory: gateway
+        env:
+          ORDERS_SERVICE_PATH: ${{ github.workspace }}/orders-service
+          CONTRACTS_PATH: ${{ github.workspace }}/shared-contracts
+        run: npm run test:e2e
+      - name: Audit coordinated dependency locks
+        run: |
+          npm audit --prefix shared-contracts --audit-level=high
+          npm audit --prefix orders-service --audit-level=high
+          npm audit --prefix gateway --audit-level=high

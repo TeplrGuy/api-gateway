@@ -49,6 +49,32 @@ app.post('/api/orders', async (req, res) => {
   }
 });
 
+app.get('/api/orders', async (req, res) => {
+  const correlationId = req.header('x-correlation-id') || randomUUID();
+  res.setHeader('x-correlation-id', correlationId);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), serviceTimeoutMs);
+  try {
+    const query = new URL(req.originalUrl, 'http://gateway.local').search;
+    const response = await fetch(`${ordersBaseUrl}/orders${query}`, {
+      headers: { 'x-correlation-id': correlationId },
+      signal: controller.signal
+    });
+    const payload = await response.json();
+    return res.status(response.status).json(payload);
+  } catch (error) {
+    console.error(JSON.stringify({
+      event: 'order_list_proxy_failed', correlationId, error: error.name
+    }));
+    if (error.name === 'AbortError') {
+      return res.status(504).json({ error: 'orders_timeout', correlationId });
+    }
+    return res.status(502).json({ error: 'orders_unavailable', correlationId });
+  } finally {
+    clearTimeout(timer);
+  }
+});
+
 app.get('/api/orders/:orderId', async (req, res) => {
   const correlationId = req.header('x-correlation-id') || randomUUID();
   try {
@@ -81,6 +107,10 @@ app.get('/api/inventory/:sku', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log('api-gateway listening on port ' + port);
-});
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log('api-gateway listening on port ' + port);
+  });
+}
+
+module.exports = app;
