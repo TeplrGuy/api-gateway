@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: TeplrGuy/orders-service
-          ref: 8b37b7809b1027b87330dc3cadb4734c119c0454
+          ref: dfe1f050267a968233bbb88635eb1b7f6e0a1189
           path: orders-service
           persist-credentials: false
       - uses: actions/checkout@v4
