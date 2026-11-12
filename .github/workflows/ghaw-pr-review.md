@@ -11,7 +11,7 @@ permissions:
   pull-requests: read
   actions: read
 tracker-id: gateway-pr-review
-max-ai-credits: 4
+max-ai-credits: 250
 safe-outputs:
   add-comment:
     max: 1
@@ -34,6 +34,23 @@ You are a PR review assistant for the `api-gateway` repository. Provide one high
   - Prioritize changed files and PR description over full-repo reads.
   - Use short evidence bullets with file references; avoid repeating diff text.
   - Keep one concise high-signal comment.
+
+## Required review evidence
+
+- Read the actual patch using `pull_request_read` with `method: get_diff`, not
+  just `get` or `get_files`. Inspect changed source and test assertions.
+- If that API cannot supply the patch, use the local checkout and compare the
+  exact base `${{ github.event.pull_request.base.sha }}` with head
+  `${{ github.event.pull_request.head.sha }}`. Never guess `HEAD~N`.
+- Cite changed file/line evidence. A diff stat or PR description is not a code
+  review. If neither patch path works, report the review as BLOCKED and explain
+  the missing evidence; do not claim correctness or verified coverage.
+- Never use a fallback to evade an authorization or security denial; report that
+  denial as a blocker instead.
+- Read individual CI check conclusions. An `unstable` mergeable state or this
+  review workflow still running is not evidence that deterministic CI failed.
+- Do not execute PR code for this advisory review. Use the linked CI evidence
+  and distinguish automated analysis from required human approval.
 
 Analyze the pull request and:
 
